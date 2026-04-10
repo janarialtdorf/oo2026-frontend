@@ -53,6 +53,27 @@ function HomePage() {
         setPage(0);
     }
 
+    const addToCart = (product: Product) => {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]"); //localstoragest votmiseks
+        const foundProduct = cart.find(cartProduct => cartProduct.product.id === product.id);
+        if (foundProduct) {
+            foundProduct.quantity++;
+        } else {
+            cart.push({product: product, quantity: 1});
+        }
+        cart.push()
+        localStorage.setItem("cart", JSON.stringify(cart)); //localstorageisse lisamiseks
+    }
+
+    // localstorage-sse array lisamiseks:
+    // 1. votta vana seis localstorage-st voi kui ei ole sellist votit lisatud, siis tyhi array
+    
+    //                                       localstorage.getItem() || "[]"
+    // 2. votta jutumargid maha              JSON.parse()
+    // 3. lisada yks juurde                  .push()
+    // 4. panna jutumargid tagasi            JSON.stringify()
+    // 5. panna localstorage-sse tagasi      localStorage.setItem()
+
     return (
         <div>
             <div>
@@ -97,6 +118,7 @@ function HomePage() {
             {products.map(product =>
                 <div key={product.id}>
                     {product.name} - {product.price} €
+                    <button onClick={() => addToCart(product)}>Lisa ostukorvi</button>
                 </div>)}
 
             <button disabled={page === 0} onClick={() => setPage(page - 1)}>Eelmine</button>
