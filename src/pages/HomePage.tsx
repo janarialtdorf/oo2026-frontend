@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import type { Product } from "../models/Product";
+import type { Category } from "../models/Category";
 
 // renderdamine --> esmakordne componendi peale tulek
 // re-renderdamine --> componendi HTMLs muutujate olekute muutmine
@@ -47,7 +48,7 @@ function HomePage() {
         setPage(0);
     }
 
-        const activeCategoryHandler = (categoryId: number) => {
+    const activeCategoryHandler = (categoryId: number) => {
         setActiveCategoryId(categoryId);
         setPage(0);
     }
@@ -76,16 +77,16 @@ function HomePage() {
 
             <br /><br />
 
-            <button 
-                style={activeCategoryId === 0 ? {fontWeight: "bold"}: undefined}
+            <button
+                style={activeCategoryId === 0 ? { fontWeight: "bold" } : undefined}
                 onClick={() => activeCategoryHandler(0)}
             >
                 Koik kategooriad
             </button>
 
             {categories.map(category =>
-                <button 
-                    style={activeCategoryId === category.id ? {fontWeight: "bold"}: undefined}
+                <button
+                    style={activeCategoryId === category.id ? { fontWeight: "bold" } : undefined}
                     onClick={() => activeCategoryHandler(category.id!)}>
                     {category.name}
                 </button>
