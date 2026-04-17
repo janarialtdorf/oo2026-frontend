@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import type { Product } from "../models/Product";
 import type { Category } from "../models/Category";
+import type { OrderRow } from "../models/OrderRow";
 
 // renderdamine --> esmakordne componendi peale tulek
 // re-renderdamine --> componendi HTMLs muutujate olekute muutmine
@@ -54,20 +55,19 @@ function HomePage() {
     }
 
     const addToCart = (product: Product) => {
-        const cart = JSON.parse(localStorage.getItem("cart") || "[]"); //localstoragest votmiseks
-        const foundProduct = cart.find(cartProduct => cartProduct.product.id === product.id);
+        const cart: OrderRow[] = JSON.parse(localStorage.getItem("cart") || "[]"); //localstoragest votmiseks
+        const foundProduct = cart.find(orderRow => orderRow.id === product.id);
         if (foundProduct) {
-            foundProduct.quantity++;
+            foundProduct.quantity += 1;
         } else {
-            cart.push({product: product, quantity: 1});
+            cart.push({ product: product, quantity: 1 });
         }
-        cart.push()
-        localStorage.setItem("cart", JSON.stringify(cart)); //localstorageisse lisamiseks
+        localStorage.setItem("cart", JSON.stringify(cart));
     }
 
     // localstorage-sse array lisamiseks:
     // 1. votta vana seis localstorage-st voi kui ei ole sellist votit lisatud, siis tyhi array
-    
+
     //                                       localstorage.getItem() || "[]"
     // 2. votta jutumargid maha              JSON.parse()
     // 3. lisada yks juurde                  .push()
